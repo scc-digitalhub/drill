@@ -409,6 +409,8 @@
             <relocation><pattern>org.apache.zookeeper.</pattern><shadedPattern>oadd.org.apache.zookeeper.</shadedPattern></relocation>
             <relocation><pattern>org.apache.hadoop.</pattern><shadedPattern>oadd.org.apache.hadoop.</shadedPattern></relocation>
             <relocation><pattern>com.ctc.wstx.</pattern><shadedPattern>oadd.com.ctc.wstx.</shadedPattern></relocation>
+            <relocation><pattern>javax.el.</pattern><shadedPattern>oadd.javax.el.</shadedPattern></relocation>
+            <relocation><pattern>javax.validation.</pattern><shadedPattern>oadd.javax.validation.</shadedPattern></relocation>
           </relocations>
           <transformers>
             <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
