@@ -8,6 +8,10 @@
 
 Apache Drill is a distributed MPP query layer that supports SQL and alternative query languages against NoSQL and Hadoop data storage systems.  It was inspired in part by [Google's Dremel](http://research.google.com/pubs/pub36632.html).  
 
+## DigitalHub Enhancements
+
+This fork has been created to integrate Drill into the [DigitalHub](https://digitalhub.readthedocs.io/en/latest/) platform. As Drill currently has a catalog but does not support it in fully qualifying schemas and tables inside queries, the Drill JDBC driver has been modified to exclude the catalog from the metadata returned to the clients.
+
 ## Developers
 
 Please read [Environment.md](docs/dev/Environment.md) for setting up and running Apache Drill. For complete developer documentation see [DevDocs.md](docs/dev/DevDocs.md)

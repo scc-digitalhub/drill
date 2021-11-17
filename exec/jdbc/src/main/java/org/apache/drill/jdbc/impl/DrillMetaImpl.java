@@ -46,7 +46,7 @@ import org.apache.calcite.avatica.QueryState;
 import org.apache.calcite.avatica.remote.TypedValue;
 import org.apache.drill.common.exceptions.DrillRuntimeException;
 import org.apache.drill.common.util.DrillStringUtils;
-import org.apache.drill.exec.client.ServerMethod;
+//import org.apache.drill.exec.client.ServerMethod;
 import org.apache.drill.exec.proto.UserBitShared.DrillPBError;
 import org.apache.drill.exec.proto.UserProtos.CatalogMetadata;
 import org.apache.drill.exec.proto.UserProtos.ColumnMetadata;
@@ -343,7 +343,7 @@ public class DrillMetaImpl extends MetaImpl {
       final List<String> typeList) {
     StringBuilder sb = new StringBuilder();
     sb.append("select "
-        + "TABLE_CATALOG as TABLE_CAT, "
+        + "null as TABLE_CAT, "
         + "TABLE_SCHEMA as TABLE_SCHEM, "
         + "TABLE_NAME, "
         + "TABLE_TYPE, "
@@ -355,7 +355,7 @@ public class DrillMetaImpl extends MetaImpl {
         + "'' as REF_GENERATION "
         + "FROM INFORMATION_SCHEMA.`TABLES` WHERE 1=1 ");
 
-    if (catalog != null) {
+    if (catalog != null && catalog.length() != 0) {
       sb.append(" AND TABLE_CATALOG = '" + DrillStringUtils.escapeSql(catalog) + "' ");
     }
 
@@ -423,11 +423,12 @@ public class DrillMetaImpl extends MetaImpl {
                                  Pat schemaPattern,
                                  Pat tableNamePattern,
                                  List<String> typeList) {
-    if (connection.getConfig().isServerMetadataDisabled() || ! connection.getClient().getSupportedMethods().contains(ServerMethod.GET_TABLES)) {
+    /*if (connection.getConfig().isServerMetadataDisabled() || ! connection.getClient().getSupportedMethods().contains(ServerMethod.GET_TABLES)) {
       return clientGetTables(catalog, schemaPattern, tableNamePattern, typeList);
     }
 
-    return serverGetTables(catalog, schemaPattern, tableNamePattern, typeList);
+    return serverGetTables(catalog, schemaPattern, tableNamePattern, typeList);*/
+    return clientGetTables(catalog, schemaPattern, tableNamePattern, typeList);
   }
 
   private MetaResultSet clientGetColumns(String catalog, Pat schemaPattern,
@@ -440,7 +441,7 @@ public class DrillMetaImpl extends MetaImpl {
         // column       source column or                  column name
         // number       expression
         // -------      ------------------------          -------------
-        + /*  1 */ "\n  TABLE_CATALOG                 as  TABLE_CAT, "
+        + /*  1 */ "\n  null                          as  TABLE_CAT, "
         + /*  2 */ "\n  TABLE_SCHEMA                  as  TABLE_SCHEM, "
         + /*  3 */ "\n  TABLE_NAME                    as  TABLE_NAME, "
         + /*  4 */ "\n  COLUMN_NAME                   as  COLUMN_NAME, "
@@ -687,7 +688,7 @@ public class DrillMetaImpl extends MetaImpl {
         + "\n  FROM INFORMATION_SCHEMA.COLUMNS "
         + "\n  WHERE 1=1 ");
 
-    if (catalog != null) {
+    if (catalog != null && catalog.length() != 0) {
       sb.append("\n  AND TABLE_CATALOG = '" + DrillStringUtils.escapeSql(catalog) + "'");
     }
     if (schemaPattern.s != null) {
@@ -965,11 +966,12 @@ public class DrillMetaImpl extends MetaImpl {
    */
   @Override
   public MetaResultSet getColumns(ConnectionHandle ch, String catalog, Pat schemaPattern, Pat tableNamePattern, Pat columnNamePattern) {
-    if (connection.getConfig().isServerMetadataDisabled() || ! connection.getClient().getSupportedMethods().contains(ServerMethod.GET_COLUMNS)) {
+    /*if (connection.getConfig().isServerMetadataDisabled() || ! connection.getClient().getSupportedMethods().contains(ServerMethod.GET_COLUMNS)) {
       return clientGetColumns(catalog, schemaPattern, tableNamePattern, columnNamePattern);
     }
 
-    return serverGetColumns(catalog, schemaPattern, tableNamePattern, columnNamePattern);
+    return serverGetColumns(catalog, schemaPattern, tableNamePattern, columnNamePattern);*/
+    return clientGetColumns(catalog, schemaPattern, tableNamePattern, columnNamePattern);
   }
 
 
@@ -1005,10 +1007,10 @@ public class DrillMetaImpl extends MetaImpl {
     StringBuilder sb = new StringBuilder();
     sb.append("select "
         + "SCHEMA_NAME as TABLE_SCHEM, "
-        + "CATALOG_NAME as TABLE_CAT "
+        + "null as TABLE_CAT "
         + " FROM INFORMATION_SCHEMA.SCHEMATA WHERE 1=1 ");
 
-    if (catalog != null) {
+    if (catalog != null && catalog.length() != 0) {
       sb.append(" AND CATALOG_NAME = '" + DrillStringUtils.escapeSql(catalog) + "' ");
     }
     if (schemaPattern.s != null) {
@@ -1024,11 +1026,12 @@ public class DrillMetaImpl extends MetaImpl {
    */
   @Override
   public MetaResultSet getSchemas(ConnectionHandle ch, String catalog, Pat schemaPattern) {
-    if (connection.getConfig().isServerMetadataDisabled() || ! connection.getClient().getSupportedMethods().contains(ServerMethod.GET_SCHEMAS)) {
+    /*if (connection.getConfig().isServerMetadataDisabled() || ! connection.getClient().getSupportedMethods().contains(ServerMethod.GET_SCHEMAS)) {
       return clientGetSchemas(catalog, schemaPattern);
     }
 
-    return serverGetSchemas(catalog, schemaPattern);
+    return serverGetSchemas(catalog, schemaPattern);*/
+    return clientGetSchemas(catalog, schemaPattern);
   }
 
   private MetaResultSet serverGetCatalogs() {
@@ -1061,6 +1064,7 @@ public class DrillMetaImpl extends MetaImpl {
         + "CATALOG_NAME as TABLE_CAT "
         + " FROM INFORMATION_SCHEMA.CATALOGS ");
 
+    sb.append(" WHERE 1=2");
     sb.append(" ORDER BY CATALOG_NAME");
 
     return s(sb.toString());
@@ -1071,11 +1075,12 @@ public class DrillMetaImpl extends MetaImpl {
    */
   @Override
   public MetaResultSet getCatalogs(ConnectionHandle ch) {
-    if (connection.getConfig().isServerMetadataDisabled() || ! connection.getClient().getSupportedMethods().contains(ServerMethod.GET_CATALOGS)) {
+    /*if (connection.getConfig().isServerMetadataDisabled() || ! connection.getClient().getSupportedMethods().contains(ServerMethod.GET_CATALOGS)) {
       return clientGetCatalogs();
     }
 
-    return serverGetCatalogs();
+    return serverGetCatalogs();*/
+    return clientGetCatalogs();
   }
 
   interface Named {

@@ -753,31 +753,36 @@ public class DrillDatabaseMetaDataImpl extends AvaticaDatabaseMetaData implement
   @Override
   public boolean supportsCatalogsInDataManipulation() throws SQLException {
     checkOpen();
-    return super.supportsCatalogsInDataManipulation();
+    //return super.supportsCatalogsInDataManipulation();
+    return false; //see https://issues.apache.org/jira/browse/DRILL-5837
   }
 
   @Override
   public boolean supportsCatalogsInProcedureCalls() throws SQLException {
     checkOpen();
-    return super.supportsCatalogsInProcedureCalls();
+    //return super.supportsCatalogsInProcedureCalls();
+    return false; //see https://issues.apache.org/jira/browse/DRILL-5837
   }
 
   @Override
   public boolean supportsCatalogsInTableDefinitions() throws SQLException {
     checkOpen();
-    return super.supportsCatalogsInTableDefinitions();
+    //return super.supportsCatalogsInTableDefinitions();
+    return false; //see https://issues.apache.org/jira/browse/DRILL-5837
   }
 
   @Override
   public boolean supportsCatalogsInIndexDefinitions() throws SQLException {
     checkOpen();
-    return super.supportsCatalogsInIndexDefinitions();
+    //return super.supportsCatalogsInIndexDefinitions();
+    return false; //see https://issues.apache.org/jira/browse/DRILL-5837
   }
 
   @Override
   public boolean supportsCatalogsInPrivilegeDefinitions() throws SQLException {
     checkOpen();
-    return super.supportsCatalogsInPrivilegeDefinitions();
+    //return super.supportsCatalogsInPrivilegeDefinitions();
+    return false; //see https://issues.apache.org/jira/browse/DRILL-5837
   }
 
   @Override
